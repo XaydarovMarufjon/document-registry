@@ -1,0 +1,85 @@
+<h2 mat-dialog-title>Реквизиты входящего документа</h2>
+
+<form [formGroup]="documentForm" (ngSubmit)="onSubmit()" class="document-form ">
+        <mat-form-field appearance="outline">
+            <mat-label>Рег. № <span class="required">*</span></mat-label>
+            <input matInput formControlName="regNumber" />
+            <mat-error *ngIf="documentForm.get('regNumber')?.hasError('required')">Обязательное поле</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Дата рег. <span class="required">*</span></mat-label>
+            <input matInput formControlName="regDate" [matDatepicker]="regDatepicker" readonly />
+            <mat-datepicker-toggle matIconSuffix [for]="regDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #regDatepicker></mat-datepicker>
+            <mat-error *ngIf="documentForm.get('regDate')?.hasError('required')">Обязательное поле</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>№ исх. док-та</mat-label>
+            <input matInput formControlName="outgoingNumber" />
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Дата исх. док-та</mat-label>
+            <input matInput formControlName="outgoingDate" [matDatepicker]="outgoingDatepicker" />
+            <mat-datepicker-toggle matIconSuffix [for]="outgoingDatepicker"></mat-datepicker-toggle>
+            <mat-datepicker #outgoingDatepicker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Форма доставки</mat-label>
+            <mat-select formControlName="deliveryMethod">
+                <mat-option value="courier">Курьер</mat-option>
+                <mat-option value="email">Email</mat-option>
+                <mat-option value="phone">Телефонограмма</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Корреспондент <span class="required">*</span></mat-label>
+            <mat-select formControlName="correspondent">
+                <mat-option value="CB">ЦБ</mat-option>
+                <mat-option value="GNI">ГНИ</mat-option>
+                <mat-option value="TSJ">ТСЖ</mat-option>
+            </mat-select>
+            <mat-error *ngIf="documentForm.get('correspondent')?.hasError('required')">Обязательное поле</mat-error>
+        </mat-form-field>
+  
+
+  
+
+    <mat-form-field appearance="outline">
+        <mat-label>Тема <span class="required">*</span></mat-label>
+        <input matInput formControlName="subject" maxlength="100" />
+        <mat-error *ngIf="documentForm.get('subject')?.hasError('required')">Обязательное поле</mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Описание</mat-label>
+        <textarea matInput formControlName="description" maxlength="1000"></textarea>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+        <mat-label>Срок исполнения</mat-label>
+        <input matInput formControlName="dueDate" [matDatepicker]="dueDatepicker" />
+        <mat-datepicker-toggle matIconSuffix [for]="dueDatepicker"></mat-datepicker-toggle>
+        <mat-datepicker #dueDatepicker></mat-datepicker>
+    </mat-form-field>
+
+
+    <mat-slide-toggle formControlName="access">Доступ</mat-slide-toggle>
+    <mat-slide-toggle formControlName="control">Контроль</mat-slide-toggle>
+  
+
+    <button type="button" mat-raised-button (click)="fileInput.click()">Выбрать файл</button>
+    <input hidden (change)="onFileSelected($event)" #fileInput type="file" id="file">
+    <small class="text-primary" *ngIf="selectedFile">{{ selectedFile.name }}</small>
+<!-- 
+     <mat-form-field appearance="outline">
+        <mat-label>Файл</mat-label>
+        <input type="file" (change)="onFileSelected($event)" />
+    </mat-form-field> 
+     -->
+ <div class="button-group">
+    <button mat-button type="button" (click)="onClose()">Закрыть</button>
+    <button mat-button color="primary" type="submit" [disabled]="documentForm.invalid">Сохранить</button>
+</div>
+
+</form>
+
