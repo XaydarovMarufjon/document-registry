@@ -18,7 +18,6 @@ import { DocumentFormComponent } from '../document-form/document-form.component'
     MaterialModule,
     ReactiveFormsModule,
   ],
-
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit {
@@ -45,16 +44,12 @@ export class DocumentListComponent implements OnInit {
   
 
   loadDocuments(): void {
-
     this.documentService.getDocuments().subscribe(documents => {
       this.dataSource = new MatTableDataSource(documents);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      // console.log("Data load bovotti" , this.dataSource);
-      
     });
   }
-  
 
   applyFilter(event: Event): void {
     const filterValue = (event.target as HTMLInputElement).value;
