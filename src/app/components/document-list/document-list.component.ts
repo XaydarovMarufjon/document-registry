@@ -6,7 +6,6 @@ import { DocumentService } from '../../services/document.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MaterialModule } from '../../modules/material/material.module';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { DocumentFormComponent } from '../document-form/document-form.component';
 
@@ -18,8 +17,8 @@ import { DocumentFormComponent } from '../document-form/document-form.component'
     CommonModule,
     MaterialModule,
     ReactiveFormsModule,
-    HttpClientModule,
   ],
+
   styleUrls: ['./document-list.component.scss']
 })
 export class DocumentListComponent implements OnInit {
@@ -35,6 +34,7 @@ export class DocumentListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
   }
 
   ngAfterViewInit(): void {
@@ -45,11 +45,12 @@ export class DocumentListComponent implements OnInit {
   
 
   loadDocuments(): void {
+
     this.documentService.getDocuments().subscribe(documents => {
       this.dataSource = new MatTableDataSource(documents);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
-      console.log("mana dat a" , this.dataSource);
+      // console.log("Data load bovotti" , this.dataSource);
       
     });
   }

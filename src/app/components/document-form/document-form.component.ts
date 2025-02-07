@@ -77,22 +77,42 @@ export class DocumentFormComponent implements OnInit {
   }
   
   onSubmit(): void {
+    console.log("✅ onSubmit ishladi!");
+
     if (this.documentForm.valid) {
-      const formData = new FormData();
-      Object.keys(this.documentForm.value).forEach(key => {
-        formData.append(key, this.documentForm.value[key]);
-      });
-      if (this.selectedFile) {
-        formData.append('file', this.selectedFile);
-      }
-      this.documentService.createDocument(formData).subscribe(response => {
-        console.log('Документ сохранен:', response);
-        this.dialogRef.close(response);
-      });
+        const formData = new FormData();
+
+        Object.keys(this.documentForm.value).forEach(key => {
+            const value = this.documentForm.value[key];
+            if (value !== null && value !== undefined) {
+                formData.append(key, value);
+            }
+        });
+
+        if (this.selectedFile) {
+            formData.append('file', this.selectedFile);
+        }
+
+        // **FormData ma'lumotlarini konsolga chiqarish**
+        for (let pair of formData.entries()) {
+            console.log(pair[0], pair[1]);
+        }
+
+        this.documentService.createDocument(formData).subscribe({
+            next: (response) => {
+                console.log('✅ Документ сохранен:', response);
+                this.dialogRef.close(response);
+            },
+            error: (error) => {
+                console.error('❌ Xatolik:', error);
+                alert('Xatolik yuz berdi. Qaytadan urinib ko‘ring.');
+            }
+        });
     } else {
-      alert('Заполните выделенные поля!');
+        alert('🚨 Заполните выделенные поля!');
     }
-  }
+}
+
   
   onClose(): void {
     this.dialogRef.close();

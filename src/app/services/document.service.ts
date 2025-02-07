@@ -8,9 +8,10 @@ import { Observable } from 'rxjs';
 export class DocumentService {
   private apiUrl = 'http://localhost:3000/documents';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   createDocument(document: any): Observable<any> {
+    console.log("create", document);
     return this.http.post(this.apiUrl, document);
   }
 
