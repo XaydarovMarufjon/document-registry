@@ -1,0 +1,7 @@
+{
+    "version": 2,
+    "routes": [
+      { "src": "/edit/(.*)", "dest": "/index.html", "override": true }
+    ]
+  }
+  
