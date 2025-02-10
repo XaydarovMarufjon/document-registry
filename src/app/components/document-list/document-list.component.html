@@ -1,8 +1,7 @@
-
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
-  
+
   <ng-container matColumnDef="file">
-    <th mat-header-cell *matHeaderCellDef mat-sort-header> Файл  </th>
+    <th mat-header-cell *matHeaderCellDef mat-sort-header> Файл </th>
     <td mat-cell *matCellDef="let document">
       <button mat-icon-button (click)="viewFile(document.fileUrl)">
         <mat-icon>attach_file</mat-icon>
@@ -47,17 +46,17 @@
       <button mat-icon-button color="warn" (click)="deleteDocument(document.id || document._id)">
         <mat-icon>delete</mat-icon>
       </button>
-      
+
     </td>
   </ng-container>
 
   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-  <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="openDocumentForm()"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (dblclick)="openDocumentForm(row)"></tr>
 </table>
 
 <mat-paginator [pageSizeOptions]="[5, 10, 25]" showFirstLastButtons></mat-paginator>
 
 
-<button mat-button extended color="primary" (click)="openDocumentForm()"> 
-  <mat-icon>add</mat-icon> Добавлять 
+<button mat-button extended color="primary" (click)="openDocumentForm()">
+  <mat-icon>add</mat-icon> Добавлять
 </button>

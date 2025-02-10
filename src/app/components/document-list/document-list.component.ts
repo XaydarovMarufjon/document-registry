@@ -33,16 +33,15 @@ export class DocumentListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
+    this.loadDocuments();
   }
 
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-    this.loadDocuments();
+   
   }
   
-
   loadDocuments(): void {
     this.documentService.getDocuments().subscribe(documents => {
       this.dataSource = new MatTableDataSource(documents);
@@ -62,15 +61,13 @@ export class DocumentListComponent implements OnInit {
 
   openDocumentForm(document?: any): void {
     console.log('Open document form');
-  
     const dialogRef = this.dialog.open(DocumentFormComponent, {
       width: "700px",
-      data: document || {}, 
+      data:   document , 
     });
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('New Document:', result);
         this.loadDocuments(); 
       }
     });
@@ -80,7 +77,7 @@ export class DocumentListComponent implements OnInit {
     if (!documentId) return; 
     if (confirm('Вы уверены, что хотите удалить этот документ?')) {
       this.documentService.deleteDocument(documentId).subscribe(() => {
-        console.log('Hujjat o‘chirildi');
+        alert('✅ Документ удален:');
         this.loadDocuments(); // Jadvalni yangilash
       });
     }

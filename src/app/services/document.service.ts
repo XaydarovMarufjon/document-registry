@@ -11,7 +11,7 @@ export class DocumentService {
   constructor(private http: HttpClient) { }
 
   createDocument(document: any): Observable<any> {
-    console.log("create", document);
+    console.log("Document yaratish service", document);
     return this.http.post(this.apiUrl, document);
   }
 
@@ -24,6 +24,7 @@ export class DocumentService {
   }
 
   updateDocument(id: string, document: any): Observable<any> {
+    console.log("Document update service", document);
     return this.http.put(`${this.apiUrl}/${id}`, document);
   }
 
