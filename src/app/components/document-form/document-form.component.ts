@@ -9,6 +9,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { DocumentService } from '../../services/document.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { response } from 'express';
 
 @Component({
   selector: 'app-document-form',
@@ -37,7 +38,7 @@ export class DocumentFormComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.documentId = this.data?._id || null;
@@ -84,27 +85,18 @@ export class DocumentFormComponent implements OnInit {
   onSubmit(): void {
     if (this.documentForm.valid) {
       const formData = new FormData();
-  
-      // Formani FormData ga o'tkazish ishlamayapti hozrcha
       Object.keys(this.documentForm.value).forEach(key => {
         const value = this.documentForm.value[key];
-        
         if (value !== null && value !== undefined) {
           formData.append(key, value);
         }
-
-        console.log('value' , value);
-        console.log('FormData' , formData);
       });
-  
+
       // Faylni qo‘shish
       if (this.selectedFile) {
         formData.append('file', this.selectedFile);
       }
-  
-      console.log('Yuborilayotgan FormData:', this.documentForm.value);
-      console.log('Yuborilayotgan documentForm:', this.documentForm.value);
-  
+
       if (this.documentId) {
         this.documentService.updateDocument(this.documentId, formData).subscribe(() => {
           alert('✅ Документ update:');
@@ -112,8 +104,8 @@ export class DocumentFormComponent implements OnInit {
           this.dialogRef.close();
         });
       } else {
-        this.documentService.createDocument(this.documentForm.value).subscribe(() => {
-          alert('✅ Документ сохранен:');
+        this.documentService.createDocument(formData).subscribe((response) => {
+          alert(`✅ Документ сохранен: ${response}`);
           this.router.navigate(['/']);
           this.dialogRef.close();
         });

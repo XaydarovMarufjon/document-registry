@@ -18,5 +18,6 @@ bootstrapApplication(AppComponent, {
     provideRouter(routes),
     provideAnimations(),
     provideHttpClient() // <-- HttpClientModule o‘rniga standalone qo‘llab-quvvatlash
+  
   ]
 });
