@@ -39,7 +39,6 @@ export class DocumentListComponent implements OnInit {
   ngAfterViewInit(): void {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-   
   }
   
   loadDocuments(): void {
@@ -63,8 +62,9 @@ export class DocumentListComponent implements OnInit {
     console.log('Open document form');
     const dialogRef = this.dialog.open(DocumentFormComponent, {
       width: "700px",
-      data:   document , 
+      data:   document 
     });
+  console.log("openDocumentForm", document);
   
     dialogRef.afterClosed().subscribe(result => {
       if (result) {

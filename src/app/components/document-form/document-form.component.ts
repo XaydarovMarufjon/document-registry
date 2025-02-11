@@ -9,7 +9,6 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { DocumentService } from '../../services/document.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { response } from 'express';
 
 @Component({
   selector: 'app-document-form',
@@ -82,38 +81,82 @@ export class DocumentFormComponent implements OnInit {
     }
   }
 
+  // onSubmit(): void {
+  //   if (this.documentForm.valid) {
+  //     const formData = new FormData();
+  //     Object.keys(this.documentForm.value).forEach(key => {
+  //       const value = this.documentForm.value[key];
+  //       if (value !== null && value !== undefined) {
+  //         formData.append(key, value);
+  //       }
+  //     });
+
+  //     // Faylni qo‘shish
+  //     if (this.selectedFile) {
+  //       formData.append('file', this.selectedFile, this.selectedFile.name);
+  //     }
+
+
+  //     console.log('📤 Yuborilayotgan FormData:');
+  //     for (const pair of formData.entries()) {
+  //       console.log(pair[0], pair[1]); // Debug uchun
+  //     }
+
+  //     if (this.documentId) {
+  //       this.documentService.updateDocument(this.documentId, formData).subscribe(() => {
+  //         alert('✅ Документ update:');
+  //         this.router.navigate(['/']);
+  //         this.dialogRef.close();
+  //       });
+  //     } else {
+  //       this.documentService.createDocument(formData).subscribe((response) => {
+  //         alert(`✅ Документ сохранен: ${response}`);
+  //         this.router.navigate(['/']);
+  //         this.dialogRef.close();
+  //       });
+  //     }
+  //     // location.reload();
+  //   } else {
+  //     alert('🚨 Заполните выделенные поля!');
+  //   }
+  // }
+
   onSubmit(): void {
     if (this.documentForm.valid) {
       const formData = new FormData();
+  
+      // 📌 Form qiymatlarini qo‘shish
       Object.keys(this.documentForm.value).forEach(key => {
         const value = this.documentForm.value[key];
         if (value !== null && value !== undefined) {
           formData.append(key, value);
         }
       });
-
-      // Faylni qo‘shish
+  
+      // 📌 Faylni qo‘shish
       if (this.selectedFile) {
-        formData.append('file', this.selectedFile);
-      }
-
-      if (this.documentId) {
-        this.documentService.updateDocument(this.documentId, formData).subscribe(() => {
-          alert('✅ Документ update:');
-          this.router.navigate(['/']);
-          this.dialogRef.close();
-        });
+        formData.append('file', this.selectedFile, this.selectedFile.name);
       } else {
-        this.documentService.createDocument(formData).subscribe((response) => {
-          alert(`✅ Документ сохранен: ${response}`);
-          this.router.navigate(['/']);
-          this.dialogRef.close();
-        });
+        alert('❌ Fayl tanlanmagan!');
+        return;
       }
+  
+      console.log('📤 Yuborilayotgan FormData:', formData);
+  
+      this.documentService.createDocument(formData).subscribe({
+        next: (response) => {
+          alert(`✅ Dokument yaratildi: ${JSON.stringify(response)}`);
+          this.router.navigate(['/']);
+        },
+        error: (err) => {
+          console.error('❌ Xatolik:', err);
+        },
+      });
     } else {
-      alert('🚨 Заполните выделенные поля!');
+      alert('🚨 Formani to‘liq to‘ldiring!');
     }
   }
+  
 
 
   onClose(): void {
