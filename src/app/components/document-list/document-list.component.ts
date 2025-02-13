@@ -54,18 +54,21 @@ export class DocumentListComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  viewFile(fileUrl: string): void {
-    window.open(fileUrl, '_blank');
+  viewFile(fileUrl: string) {
+    console.log('📂 Ochilayotgan fayl:', fileUrl);
+    if (fileUrl) {
+      window.open(fileUrl, '_blank'); 
+    } else {
+      alert('❌ Нет файла!');
+    }
   }
-
+  
+  
   openDocumentForm(document?: any): void {
-    console.log('Open document form');
     const dialogRef = this.dialog.open(DocumentFormComponent, {
       width: "700px",
       data:   document 
     });
-  console.log("openDocumentForm", document);
-  
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadDocuments(); 
@@ -77,11 +80,9 @@ export class DocumentListComponent implements OnInit {
     if (!documentId) return; 
     if (confirm('Вы уверены, что хотите удалить этот документ?')) {
       this.documentService.deleteDocument(documentId).subscribe(() => {
-        alert('✅ Документ удален:');
-        this.loadDocuments(); // Jadvalni yangilash
+        this.loadDocuments(); 
       });
     }
   }
-  
   
 }
