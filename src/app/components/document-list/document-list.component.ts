@@ -55,14 +55,12 @@ export class DocumentListComponent implements OnInit {
   }
 
   viewFile(fileUrl: string) {
-    console.log('📂 Ochilayotgan fayl:', fileUrl);
     if (fileUrl) {
       window.open(fileUrl, '_blank'); 
     } else {
       alert('❌ Нет файла!');
     }
   }
-  
   
   openDocumentForm(document?: any): void {
     const dialogRef = this.dialog.open(DocumentFormComponent, {

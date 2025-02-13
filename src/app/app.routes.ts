@@ -5,6 +5,6 @@ import { DocumentFormComponent } from './components/document-form/document-form.
 export const routes: Routes = [
     { path: '', component: DocumentListComponent }, 
   { path: 'add', component: DocumentFormComponent },  
-  { path: 'edit/:id', component: DocumentFormComponent },
+  { path: 'edit/:id', component: DocumentFormComponent  },
   { path: '**', redirectTo: '' } 
 ];
