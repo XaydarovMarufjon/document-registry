@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class DocumentService {
   // private apiUrl = 'http://localhost:3000/documents';
-  private apiUrl = 'https://backend-doc-eight.vercel.app//documents';
+  private apiUrl = 'https://backend-doc-eight.vercel.app/documents';
 
   
   constructor(private http: HttpClient) { }
