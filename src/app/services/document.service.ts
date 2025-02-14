@@ -6,8 +6,10 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class DocumentService {
-  private apiUrl = 'http://localhost:3000/documents';
+  // private apiUrl = 'http://localhost:3000/documents';
+  private apiUrl = 'https://backend-doc-eight.vercel.app//documents';
 
+  
   constructor(private http: HttpClient) { }
 
   createDocument(document: FormData): Observable<any> {
